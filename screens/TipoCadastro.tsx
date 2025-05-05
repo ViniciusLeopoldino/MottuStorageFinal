@@ -33,6 +33,12 @@ export default function TipoCadastroScreen({
           <Text style={styles.buttonText}>Cadastro Localização</Text>
         </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Text style={styles.buttonText}>VOLTAR</Text>
+      </TouchableOpacity>
 
       <Text style={styles.footer}>Desenvolvido por DPV-Tech</Text>
     </View>
