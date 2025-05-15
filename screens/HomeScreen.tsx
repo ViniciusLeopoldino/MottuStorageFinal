@@ -19,6 +19,9 @@ export default function HomeScreen({ navigation }: any) {
         <Text style={styles.buttonText}>CONSULTA</Text>
       </TouchableOpacity>
       </View>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Historico')}>
+        <Text style={styles.buttonText}>HISTÓRICO</Text>
+      </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
         <Text style={styles.buttonText}>SAIR</Text>
       </TouchableOpacity>

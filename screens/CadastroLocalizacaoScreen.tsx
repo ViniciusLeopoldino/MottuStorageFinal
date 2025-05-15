@@ -1,5 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Alert,
+} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 export default function CadastroLocalizacao() {
@@ -11,9 +20,30 @@ export default function CadastroLocalizacao() {
     compartimento: '',
   });
 
-  const salvarLocalizacao = () => {
+  // Carregar dados salvos
+  useEffect(() => {
+    const carregarLocalizacaoSalva = async () => {
+      try {
+        const salvo = await AsyncStorage.getItem('ultimaLocalizacao');
+        if (salvo) {
+          setLocalizacao(JSON.parse(salvo));
+        }
+      } catch (err) {
+        console.error('Erro ao carregar localização:', err);
+      }
+    };
+    carregarLocalizacaoSalva();
+  }, []);
+
+  const salvarLocalizacao = async () => {
     const nome_localizacao = `${localizacao.armazem}-${localizacao.rua}-${localizacao.modulo}-${localizacao.compartimento}`;
-    alert(`Localização salva: ${nome_localizacao}`);
+    try {
+      await AsyncStorage.setItem('ultimaLocalizacao', JSON.stringify(localizacao));
+      Alert.alert('Sucesso', `Localização salva: ${nome_localizacao}`);
+    } catch (err) {
+      console.error('Erro ao salvar:', err);
+      Alert.alert('Erro', 'Não foi possível salvar a localização.');
+    }
   };
 
   return (
@@ -27,7 +57,9 @@ export default function CadastroLocalizacao() {
             placeholder={key.toUpperCase()}
             placeholderTextColor="#aaa"
             value={localizacao[key]}
-            onChangeText={(text) => setLocalizacao({ ...localizacao, [key]: text })}
+            onChangeText={(text) =>
+              setLocalizacao((prev) => ({ ...prev, [key]: text }))
+            }
           />
         ))}
         <TouchableOpacity style={styles.button} onPress={salvarLocalizacao}>

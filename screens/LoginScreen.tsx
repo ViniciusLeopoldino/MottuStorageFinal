@@ -39,10 +39,10 @@ export default function LoginScreen({ navigation }: any) {
         <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+      <TouchableOpacity onPress={() => navigation.navigate('RecuperarSenha')}>
         <Text style={styles.link}>Recuperar Senha</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+      <TouchableOpacity onPress={() => navigation.navigate('Cadastrar')}>
         <Text style={styles.link}>Cadastrar</Text>
       </TouchableOpacity>
 

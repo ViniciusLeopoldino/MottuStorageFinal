@@ -10,8 +10,9 @@ import RecebimentoScreen from './screens/RecebimentoScreen';
 import ConsultaScreen from './screens/ConsultaScreen';
 import MensagemPopupScreen from './screens/MensagemPopupScreen';
 import TipoCadastroScreen from './screens/TipoCadastro';
-import RegisterScreen from './screens/RegisterScreen';
-import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
+import CadastrarScreen from './screens/CadastrarScreen';
+import RecuperarSenhaScreen from './screens/RecuperarSenhaScreen';
+import HistoricoScreen from './screens/HistoricoScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,8 +34,9 @@ export default function App() {
           name="MensagemPopup"
           component={({ route }: { route: any }) => <MensagemPopupScreen route={route} />}
         />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+        <Stack.Screen name="Cadastrar" component={CadastrarScreen} />
+        <Stack.Screen name="RecuperarSenha" component={RecuperarSenhaScreen} />
+        <Stack.Screen name="Historico" component={HistoricoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

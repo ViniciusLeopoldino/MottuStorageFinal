@@ -1,5 +1,3 @@
-// RecebimentoScreen.tsx
-
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -11,6 +9,7 @@ import {
 } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Tipo das rotas
 type RootStackParamList = {
@@ -20,14 +19,12 @@ type RootStackParamList = {
 const RecebimentoScreen: React.FC = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  // Permissões do scanner
   const [permission, requestPermission] = BarCodeScanner.usePermissions();
   const [scanningType, setScanningType] = useState<'none' | 'qr' | 'loc'>('none');
   const [codigoVeiculo, setCodigoVeiculo] = useState<string>('');
   const [codigoLocal, setCodigoLocal] = useState<string>('');
   const [mensagem, setMensagem] = useState<string>('');
 
-  // Se for nativo, pede permissão; no web liberamos
   useEffect(() => {
     if (Platform.OS !== 'web' && !permission) {
       requestPermission();
@@ -78,12 +75,32 @@ const RecebimentoScreen: React.FC = () => {
     }
   };
 
-  const handleArmazenar = () => {
+const handleArmazenar = async () => {
+  try {
+    const novo = {
+      veiculo: codigoVeiculo,
+      localizacao: codigoLocal,
+      data: new Date().toISOString(),
+    };
+
+    // Pega o histórico antigo
+    const anterior = await AsyncStorage.getItem('historicoRecebimentos');
+    const historico = anterior ? JSON.parse(anterior) : [];
+
+    // Salva o novo + antigo
+    const atualizado = [novo, ...historico];
+    await AsyncStorage.setItem('historicoRecebimentos', JSON.stringify(atualizado));
+
     Alert.alert('Sucesso', `Veículo ${codigoVeiculo}\narmazenado em ${codigoLocal}`);
     setCodigoVeiculo('');
     setCodigoLocal('');
     setMensagem('');
-  };
+  } catch (error) {
+    console.error('Erro ao salvar recebimento:', error);
+    Alert.alert('Erro', 'Falha ao salvar o recebimento.');
+  }
+};
+
 
   // Tela de scanner nativa
   if (Platform.OS !== 'web' && scanningType !== 'none') {
@@ -110,35 +127,33 @@ const RecebimentoScreen: React.FC = () => {
     );
   }
 
-  // Tela principal
   return (
     <View style={styles.wrapper}>
-    <View style={styles.container}>
-      <Text style={styles.title}>Recebimento de Veículo</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Recebimento de Veículo</Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => onPressIdentify('qr')}>
-        <Text style={styles.buttonText}>
-          {codigoVeiculo ? `Veículo: ${codigoVeiculo}` : 'Identificação (QR)'}
-        </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => onPressIdentify('loc')}>
-        <Text style={styles.buttonText}>
-          {codigoLocal ? `Local: ${codigoLocal}` : 'Localização (Cód. Barras)'}
-        </Text>
-      </TouchableOpacity>
-
-      {codigoVeiculo && codigoLocal && (
-        <TouchableOpacity style={styles.storeButton} onPress={handleArmazenar}>
-          <Text style={styles.storeButtonText}>Armazenar</Text>
+        <TouchableOpacity style={styles.button} onPress={() => onPressIdentify('qr')}>
+          <Text style={styles.buttonText}>
+            {codigoVeiculo ? `Veículo: ${codigoVeiculo}` : 'Identificação (QR)'}
+          </Text>
         </TouchableOpacity>
-      )}
 
-      {!!mensagem && <Text style={styles.message}>{mensagem}</Text>}
+        <TouchableOpacity style={styles.button} onPress={() => onPressIdentify('loc')}>
+          <Text style={styles.buttonText}>
+            {codigoLocal ? `Local: ${codigoLocal}` : 'Localização (Cód. Barras)'}
+          </Text>
+        </TouchableOpacity>
 
+        {codigoVeiculo && codigoLocal && (
+          <TouchableOpacity style={styles.storeButton} onPress={handleArmazenar}>
+            <Text style={styles.storeButtonText}>Armazenar</Text>
+          </TouchableOpacity>
+        )}
 
-    </View>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+        {!!mensagem && <Text style={styles.message}>{mensagem}</Text>}
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
         <Text style={styles.buttonText}>VOLTAR</Text>
       </TouchableOpacity>
 

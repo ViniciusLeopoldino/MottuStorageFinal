@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
 export default function CadastroVeiculoScreen() {
@@ -25,19 +26,36 @@ export default function CadastroVeiculoScreen() {
     ocorrencia: '',
   });
 
+  // Recuperar dados salvos ao iniciar a tela
+  useEffect(() => {
+    const carregarCadastroSalvo = async () => {
+      try {
+        const salvo = await AsyncStorage.getItem('ultimoCadastro');
+        if (salvo) {
+          setVeiculo(JSON.parse(salvo));
+        }
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+      }
+    };
+    carregarCadastroSalvo();
+  }, []);
+
   const handleDownloadQRCode = async () => {
-    // Monte a string com os dados
-    const dataString = JSON.stringify(veiculo);
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
-      dataString
-    )}&size=300x300`;
-
-    if (Platform.OS === 'web') {
-      window.open(qrUrl, '_blank');
-      return;
-    }
-
     try {
+      // Salvar os dados no AsyncStorage
+      await AsyncStorage.setItem('ultimoCadastro', JSON.stringify(veiculo));
+
+      const dataString = JSON.stringify(veiculo);
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(
+        dataString
+      )}&size=300x300`;
+
+      if (Platform.OS === 'web') {
+        window.open(qrUrl, '_blank');
+        return;
+      }
+
       const filename = FileSystem.documentDirectory + 'mottu-qr.png';
       const { uri } = await FileSystem.downloadAsync(qrUrl, filename);
       const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -60,34 +78,26 @@ export default function CadastroVeiculoScreen() {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Cadastro de Veiculos</Text>
+        <Text style={styles.title}>Cadastro de Veículos</Text>
         <View style={styles.form}>
-          {(
-            ['placa', 'chassi', 'modelo', 'km', 'contrato', 'ocorrencia'] as const
-          ).map((key) => (
+          {(['placa', 'chassi', 'modelo', 'km', 'contrato', 'ocorrencia'] as const).map((key) => (
             <TextInput
               key={key}
               style={styles.input}
               placeholder={key.toUpperCase()}
               placeholderTextColor="#00FF00"
-              value={(veiculo as any)[key]}
+              value={veiculo[key]}
               onChangeText={(text) =>
                 setVeiculo((v) => ({ ...v, [key]: text }))
               }
             />
           ))}
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={handleDownloadQRCode}
-          >
+          <TouchableOpacity style={styles.button} onPress={handleDownloadQRCode}>
             <Text style={styles.buttonText}>IMPRIMIR</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
             <Text style={styles.backButtonText}>VOLTAR</Text>
           </TouchableOpacity>
         </View>
@@ -102,6 +112,13 @@ const styles = StyleSheet.create({
   wrapper: { flex: 1, backgroundColor: '#000' },
   container: { flexGrow: 1, justifyContent: 'center', padding: 20 },
   form: { alignItems: 'center' },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#00FF00',
+    textAlign: 'center',
+    marginBottom: 30,
+  },
   input: {
     width: '100%',
     borderWidth: 1,
@@ -112,13 +129,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     marginBottom: 15,
-  },
-    title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#00FF00',
-    textAlign: 'center',
-    marginBottom: 30,
   },
   button: {
     backgroundColor: '#00FF00',
