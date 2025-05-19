@@ -115,15 +115,18 @@ w
 
 ### 6. Funcionalidades
 
-## Cadastro
+#### Cadastro
 - Utilizar para cadastro de Veículos e Localizações
 
-## Recebimento
+#### Recebimento
 - Utilizar para realizar o recebimento do veículo cadastrado e armazenar na posição indicada
 
-## Consulta
+#### Consulta
 - Utilizar para consultar veículos cadastrados com base na placa
 - É exibido os dados do veículo e a localização que o mesmo se encontra
+
+#### Histórico
+- Exibe histórico dos últimos recebimentos realizados
 
 ---
 
