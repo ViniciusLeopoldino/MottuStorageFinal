@@ -117,6 +117,7 @@ w
 
 #### Cadastro
 - Utilizar para cadastro de Veículos e Localizações
+- Em cadastro de veículos é impresso o QR Code para identificar a moto
 
 #### Recebimento
 - Utilizar para realizar o recebimento do veículo cadastrado e armazenar na posição indicada
