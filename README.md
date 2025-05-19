@@ -59,28 +59,6 @@ O app **Mottu Storage** permite:
 
 ---
 
-## 📂 Estrutura do Projeto
-
-```plaintext
-📁 MottuStorage
-├── App.tsx                         ← Navegação principal com React Navigation
-├── screens/
-│   ├── LoginScreen.tsx            ← Tela de login
-│   ├── HomeScreen.tsx             ← Tela principal
-│   ├── TipoCadastroScreen.tsx     ← Escolha entre veículo ou localização
-│   ├── CadastroVeiculosScreen.tsx ← Cadastro de veículos com QR Code
-│   ├── CadastroLocalizacaoScreen.tsx ← Cadastro de localização
-│   ├── RecebimentoScreen.tsx      ← Leitura de QR e código de barras
-│   ├── ConsultaScreen.tsx         ← Consulta por placa, chassi ou contrato
-│   └── MensagemPopupScreen.tsx    ← Mensagens de retorno/erro
-├── assets/
-│   └── logo.png                   ← Logotipo (se usado)
-├── README.md
-└── package.json
-```
-
----
-
 ## ▶️ Como Executar
 
 ### 1. Clone o repositório
