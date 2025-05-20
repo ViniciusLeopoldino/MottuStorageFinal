@@ -93,12 +93,12 @@ export default function CadastroLocalizacao() {
 
         {/* Botão para salvar localização */}
         <TouchableOpacity style={styles.button} onPress={salvarLocalizacao}>
-          <Text style={styles.buttonText}>Salvar Localização</Text>
+          <Text style={styles.buttonText}>SALVAR</Text>
         </TouchableOpacity>
 
         {/* Botão para voltar para a tela anterior */}
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text style={styles.backButtonText}>Voltar</Text>
+          <Text style={styles.backButtonText}>VOLTAR</Text>
         </TouchableOpacity>
       </ScrollView>
 
@@ -145,12 +145,14 @@ const styles = StyleSheet.create({
   },
   // Estilo dos inputs de texto
   input: {
-    backgroundColor: '#111',
-    color: '#fff',
+    width: '100%',
     borderWidth: 1,
-    borderColor: '#333',
-    borderRadius: 8,
-    padding: 12,
+    borderColor: '#00FF00',
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    color: '#fff',
+    fontSize: 16,
     marginBottom: 15,
   },
   // Botão principal de salvar

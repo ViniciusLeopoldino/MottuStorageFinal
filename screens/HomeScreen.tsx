@@ -33,7 +33,6 @@ export default function HomeScreen({ navigation }: any) {
         >
           <Text style={styles.buttonText}>CONSULTA</Text>
         </TouchableOpacity>
-      </View>
 
       {/* Botão para navegar para o Histórico */}
       <TouchableOpacity
@@ -45,11 +44,13 @@ export default function HomeScreen({ navigation }: any) {
 
       {/* Botão para sair (voltar para tela de Login) */}
       <TouchableOpacity
-        style={styles.button}
+        style={styles.backButton}
         onPress={() => navigation.navigate('Login')}
       >
-        <Text style={styles.buttonText}>SAIR</Text>
+        <Text style={styles.backButtonText}>SAIR</Text>
       </TouchableOpacity>
+
+      </View>
 
       {/* Rodapé com informação do desenvolvedor */}
       <Text style={styles.footer}>Desenvolvido por DPV-Tech</Text>
@@ -60,35 +61,37 @@ export default function HomeScreen({ navigation }: any) {
 // Estilos da tela HomeScreen
 const styles = StyleSheet.create({
   // Wrapper geral da tela
-  wrapper: {
-    flex: 1,
-    backgroundColor: '#000',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
+wrapper: {
+  flex: 1,
+  backgroundColor: '#000',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingHorizontal: 20,
+  paddingBottom: 30, // espaço pro rodapé
+},
+
   // Container central dos botões principais
-  container: {
-    flex: 1,
-    backgroundColor: '#000', // fundo preto
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
+container: {
+  width: '100%',
+  alignItems: 'center',
+},
+
   // Estilo do título
   title: {
-    color: '#00FF00', // texto verde
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 40,
+    color: '#00FF00',
+    textAlign: 'center',
+    marginBottom: 20,
   },
   // Estilo dos botões
   button: {
-    width: '100%',
-    backgroundColor: '#00FF00', // botão verde
-    borderRadius: 50, // pill
-    paddingVertical: 16,
+    backgroundColor: '#00FF00',
+    paddingVertical: 15,
+    borderRadius: 25,
     alignItems: 'center',
-    marginVertical: 10,
+    marginTop: 10,
+    width: '100%',
   },
   // Estilo do texto dos botões
   buttonText: {
@@ -96,11 +99,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  // Estilo do rodapé
-  footer: {
-    textAlign: 'center',
-    color: '#555',
-    fontSize: 12,
-    paddingVertical: 10,
+
+  backButton: {
+    marginTop: 15,
+    padding: 12,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#00FF00',
+    alignItems: 'center',
+    width: '100%',
   },
+
+  backButtonText: { 
+    color: '#00FF00',
+    fontWeight: 'bold', 
+    fontSize: 16, 
+  },
+
+  // Estilo do rodapé
+footer: {
+  position: 'absolute',
+  bottom: 10,
+  textAlign: 'center',
+  color: '#555',
+  fontSize: 12,
+  width: '100%',
+},
+
 });

@@ -111,7 +111,7 @@ export default function CadastroVeiculoScreen() {
               key={key}
               style={styles.input}
               placeholder={key.toUpperCase()}
-              placeholderTextColor="#00FF00"
+              placeholderTextColor="#aaa"
               value={veiculo[key]}
               onChangeText={(text) =>
                 setVeiculo((v) => ({ ...v, [key]: text }))
@@ -173,9 +173,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
   },
-  wrapper: { flex: 1, backgroundColor: '#000' },
-  container: { flexGrow: 1, justifyContent: 'center', padding: 20 },
-  form: { alignItems: 'center' },
+  wrapper: {
+    flex: 1,
+    backgroundColor: '#000',
+    justifyContent: 'space-between',
+  },
+  container: {
+    padding: 20,
+  },
+  form: { 
+    alignItems: 'center',
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -196,40 +204,51 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#00FF00',
+    paddingVertical: 15,
     borderRadius: 25,
-    paddingVertical: 14,
-    paddingHorizontal: 40,
     alignItems: 'center',
     marginTop: 10,
+    width: '100%',
   },
-  buttonText: { color: '#000', fontSize: 16, fontWeight: 'bold' },
+
+  buttonText: {
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
   clearButton: {
     marginTop: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
+    padding: 12,
     borderRadius: 25,
-    backgroundColor: '#111',
     borderWidth: 1,
     borderColor: '#00FF00',
+    alignItems: 'center',
   },
   clearButtonText: {
     color: '#00FF00',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   backButton: {
     marginTop: 15,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
+    padding: 12,
     borderRadius: 25,
     borderWidth: 1,
     borderColor: '#00FF00',
+    alignItems: 'center',
+    width: '100%',
   },
-  backButtonText: { color: '#00FF00', fontSize: 16 },
+
+  backButtonText: { 
+    color: '#00FF00',
+    fontWeight: 'bold', 
+    fontSize: 16, 
+  },
   footer: {
+    textAlign: 'center',
     color: '#555',
     fontSize: 12,
-    textAlign: 'center',
-    marginTop: 30,
+    paddingVertical: 10,
   },
   reuseButton: {
     marginBottom: 20,

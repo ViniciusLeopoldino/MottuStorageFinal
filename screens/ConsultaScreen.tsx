@@ -90,9 +90,9 @@ export default function ConsultaScreen() {
   // Renderização da interface da tela
   return (
     <View style={styles.wrapper}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
         {/* Título da tela */}
-        <Text style={styles.title}>Consulta de Veículo</Text>
+        <Text style={styles.title}>CONSULTA DE VEÍCULO</Text>
 
         {/* Campo de entrada para código de consulta */}
         <TextInput
@@ -105,7 +105,7 @@ export default function ConsultaScreen() {
 
         {/* Botão para acionar a consulta */}
         <TouchableOpacity style={styles.button} onPress={consultarVeiculo}>
-          <Text style={styles.buttonText}>Consultar</Text>
+          <Text style={styles.buttonText}>CONSULTAR</Text>
         </TouchableOpacity>
 
         {/* Exibição dos dados do veículo, caso encontrados */}
@@ -119,14 +119,14 @@ export default function ConsultaScreen() {
             ))}
           </View>
         )}
-      </ScrollView>
+      </View>
 
       {/* Botão para voltar à tela inicial */}
       <TouchableOpacity
-        style={styles.button}
+        style={styles.backButton}
         onPress={() => navigation.navigate('Home')}
       >
-        <Text style={styles.buttonText}>VOLTAR</Text>
+        <Text style={styles.backButtonText}>VOLTAR</Text>
       </TouchableOpacity>
 
       {/* Rodapé com créditos */}
@@ -137,23 +137,24 @@ export default function ConsultaScreen() {
 
 // Estilos utilizados na tela
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    backgroundColor: '#000',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
+wrapper: {
+  flex: 1,
+  backgroundColor: '#000',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingHorizontal: 20,
+  paddingBottom: 30, // espaço pro rodapé
+},
+container: {
+  width: '100%',
+  alignItems: 'center',
+},
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#00FF00',
-    marginBottom: 30,
     textAlign: 'center',
+    marginBottom: 20,
   },
   input: {
     width: '100%',
@@ -167,18 +168,36 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   button: {
-    width: '100%',
     backgroundColor: '#00FF00',
+    paddingVertical: 15,
     borderRadius: 25,
-    paddingVertical: 14,
     alignItems: 'center',
-    marginBottom: 20,
+    marginTop: 10,
+    width: '100%',
   },
-  buttonText: {
+
+    buttonText: {
     color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
   },
+
+      backButton: {
+    marginTop: 15,
+    padding: 12,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#00FF00',
+    alignItems: 'center',
+    width: '100%',
+  },
+
+  backButtonText: { 
+    color: '#00FF00',
+    fontWeight: 'bold', 
+    fontSize: 16, 
+  },
+
   resultado: {
     marginTop: 20,
     padding: 20,
@@ -195,9 +214,11 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   footer: {
-    color: '#555',
-    fontSize: 12,
-    textAlign: 'center',
-    marginTop: 10,
+  position: 'absolute',
+  bottom: 10,
+  textAlign: 'center',
+  color: '#555',
+  fontSize: 12,
+  width: '100%',
   },
 });
