@@ -2,35 +2,49 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+// Tela de cadastro de usuário
 export default function RegisterScreen() {
+  // Hook de navegação
   const navigation = useNavigation();
+
+  // Estados para armazenar os dados do formulário
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // Função chamada ao pressionar o botão de cadastro
   const handleRegister = () => {
+    // Validação dos campos obrigatórios
     if (!username || !email || !password || !confirmPassword) {
       Alert.alert('Erro', 'Preencha todos os campos.');
       return;
     }
+    // Verificação se as senhas coincidem
     if (password !== confirmPassword) {
       Alert.alert('Erro', 'As senhas não coincidem.');
       return;
     }
+    // Mensagem de sucesso e retorno à tela anterior
     Alert.alert('Sucesso', 'Usuário cadastrado com sucesso!');
     navigation.goBack();
   };
 
   return (
+    // Container principal da tela
     <View style={styles.container}>
+      {/* Título da tela */}
       <Text style={styles.title}>Cadastro</Text>
+
+      {/* Campo para nome de usuário */}
       <TextInput
         style={styles.input}
         placeholder="Nome de Usuário"
         placeholderTextColor="#00FF00"
         onChangeText={setUsername}
       />
+
+      {/* Campo para email */}
       <TextInput
         style={styles.input}
         placeholder="Email"
@@ -38,6 +52,8 @@ export default function RegisterScreen() {
         keyboardType="email-address"
         onChangeText={setEmail}
       />
+
+      {/* Campo para senha */}
       <TextInput
         style={styles.input}
         placeholder="Senha"
@@ -45,6 +61,8 @@ export default function RegisterScreen() {
         secureTextEntry
         onChangeText={setPassword}
       />
+
+      {/* Campo para confirmação de senha */}
       <TextInput
         style={styles.input}
         placeholder="Confirmar Senha"
@@ -52,9 +70,13 @@ export default function RegisterScreen() {
         secureTextEntry
         onChangeText={setConfirmPassword}
       />
+
+      {/* Botão de cadastro */}
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
+
+      {/* Link para voltar ao login */}
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Text style={styles.link}>Voltar ao Login</Text>
       </TouchableOpacity>
@@ -62,6 +84,7 @@ export default function RegisterScreen() {
   );
 }
 
+// Estilos da tela de cadastro
 const styles = StyleSheet.create({
   container: {
     flex: 1,

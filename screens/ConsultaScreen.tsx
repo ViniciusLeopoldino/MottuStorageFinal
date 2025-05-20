@@ -1,3 +1,4 @@
+// Importação de dependências e tipos necessários
 import React, { useState } from 'react';
 import {
   View,
@@ -12,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// Definição dos tipos de navegação utilizados na tela
 type RootStackParamList = {
   ConsultaScreen: undefined;
   Home: undefined;
@@ -22,8 +24,12 @@ type TipoCadastroScreenNavigationProp = StackNavigationProp<
   'ConsultaScreen'
 >;
 
+// Componente principal da tela de consulta de veículo
 export default function ConsultaScreen() {
+  // Hook de navegação
   const navigation = useNavigation<TipoCadastroScreenNavigationProp>();
+
+  // Estados para armazenar o código de consulta e os dados do veículo consultado
   const [codigoConsulta, setCodigoConsulta] = useState('');
   const [dadosVeiculo, setDadosVeiculo] = useState<{
     placa: string;
@@ -34,6 +40,7 @@ export default function ConsultaScreen() {
     localizacao: string;
   } | null>(null);
 
+  // Função responsável por consultar os dados do veículo no AsyncStorage
   const consultarVeiculo = async () => {
     if (!codigoConsulta) {
       Alert.alert('Atenção', 'Por favor, insira um código válido.');
@@ -41,7 +48,7 @@ export default function ConsultaScreen() {
     }
 
     try {
-      // Buscar dados salvos anteriormente
+      // Busca os dados salvos anteriormente no AsyncStorage
       const cadastro = await AsyncStorage.getItem('ultimoCadastro');
       const local = await AsyncStorage.getItem('ultimaLocalizacao');
 
@@ -54,7 +61,7 @@ export default function ConsultaScreen() {
       const localizacao = JSON.parse(local);
       const nome_localizacao = `${localizacao.armazem}-${localizacao.rua}-${localizacao.modulo}-${localizacao.compartimento}`;
 
-      // Verifica se o dado consultado corresponde a algum campo
+      // Verifica se o código informado corresponde a algum campo do cadastro
       const encontrado =
         dados.placa === codigoConsulta ||
         dados.chassi === codigoConsulta ||
@@ -65,6 +72,7 @@ export default function ConsultaScreen() {
         return;
       }
 
+      // Atualiza o estado com os dados encontrados
       setDadosVeiculo({
         placa: dados.placa,
         modelo: dados.modelo,
@@ -79,10 +87,14 @@ export default function ConsultaScreen() {
     }
   };
 
+  // Renderização da interface da tela
   return (
     <View style={styles.wrapper}>
       <ScrollView contentContainerStyle={styles.container}>
+        {/* Título da tela */}
         <Text style={styles.title}>Consulta de Veículo</Text>
+
+        {/* Campo de entrada para código de consulta */}
         <TextInput
           style={styles.input}
           placeholder="Insira PLACA, CHASSI ou CONTRATO"
@@ -90,10 +102,13 @@ export default function ConsultaScreen() {
           value={codigoConsulta}
           onChangeText={setCodigoConsulta}
         />
+
+        {/* Botão para acionar a consulta */}
         <TouchableOpacity style={styles.button} onPress={consultarVeiculo}>
           <Text style={styles.buttonText}>Consultar</Text>
         </TouchableOpacity>
 
+        {/* Exibição dos dados do veículo, caso encontrados */}
         {dadosVeiculo && (
           <View style={styles.resultado}>
             <Text style={styles.resultadoTitulo}>Dados do Veículo:</Text>
@@ -106,6 +121,7 @@ export default function ConsultaScreen() {
         )}
       </ScrollView>
 
+      {/* Botão para voltar à tela inicial */}
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate('Home')}
@@ -113,11 +129,13 @@ export default function ConsultaScreen() {
         <Text style={styles.buttonText}>VOLTAR</Text>
       </TouchableOpacity>
 
+      {/* Rodapé com créditos */}
       <Text style={styles.footer}>Desenvolvido por DPV-Tech</Text>
     </View>
   );
 }
 
+// Estilos utilizados na tela
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,

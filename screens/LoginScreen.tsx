@@ -1,23 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
+// Tela de Login principal
 export default function LoginScreen({ navigation }: any) {
+  // Estados para armazenar login e senha digitados pelo usuário
   const [login, setLogin] = useState('');
   const [senha, setSenha] = useState('');
 
+  // Função chamada ao pressionar o botão de login
   const handleLogin = () => {
     if (login && senha) {
+      // Se ambos os campos estiverem preenchidos, navega para a tela Home
       navigation.replace('Home');
     } else {
+      // Caso contrário, exibe alerta solicitando preenchimento dos campos
       alert('Preencha todos os campos');
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* Aqui você pode trocar pela sua logo */}
+      {/* Logo da aplicação */}
       <Image source={require('../assets/icon.png')} style={styles.logo} />
 
+      {/* Campo de entrada para o login */}
       <TextInput
         style={styles.input}
         placeholder="Login"
@@ -26,6 +32,7 @@ export default function LoginScreen({ navigation }: any) {
         onChangeText={setLogin}
       />
 
+      {/* Campo de entrada para a senha */}
       <TextInput
         style={styles.input}
         placeholder="Senha"
@@ -35,22 +42,28 @@ export default function LoginScreen({ navigation }: any) {
         onChangeText={setSenha}
       />
 
+      {/* Botão de login */}
       <TouchableOpacity onPress={handleLogin} style={styles.button}>
         <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
 
+      {/* Link para recuperar senha */}
       <TouchableOpacity onPress={() => navigation.navigate('RecuperarSenha')}>
         <Text style={styles.link}>Recuperar Senha</Text>
       </TouchableOpacity>
+
+      {/* Link para cadastrar novo usuário */}
       <TouchableOpacity onPress={() => navigation.navigate('Cadastrar')}>
         <Text style={styles.link}>Cadastrar</Text>
       </TouchableOpacity>
 
+      {/* Rodapé com informação do desenvolvedor */}
       <Text style={styles.footer}>Desenvolvido por DPV-Tech</Text>
     </View>
   );
 }
 
+// Estilos da tela de login
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -69,7 +82,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderColor: '#00FF00',         // borda verde vibrante
     borderWidth: 2,
-    borderRadius: 50,               // pill
+    borderRadius: 50,               // formato pill
     paddingVertical: 14,
     paddingHorizontal: 20,
     color: '#FFF',

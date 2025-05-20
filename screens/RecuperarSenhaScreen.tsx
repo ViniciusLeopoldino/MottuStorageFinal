@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
+// Tela de recuperação de senha
 export default function ForgotPasswordScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
 
+  // Função para lidar com a recuperação de senha
   const handleRecovery = () => {
     if (!email) {
       Alert.alert('Erro', 'Por favor, informe seu e-mail.');
@@ -15,6 +17,7 @@ export default function ForgotPasswordScreen() {
     navigation.goBack();
   };
 
+  // Renderização dos componentes da tela
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Recuperar Senha</Text>
@@ -35,6 +38,7 @@ export default function ForgotPasswordScreen() {
   );
 }
 
+// Estilos da tela de recuperação de senha
 const styles = StyleSheet.create({
   container: {
     flex: 1,

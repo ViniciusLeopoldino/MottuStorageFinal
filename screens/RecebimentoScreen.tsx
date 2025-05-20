@@ -11,26 +11,30 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Tipo das rotas
+// Definição dos tipos de rotas para navegação
 type RootStackParamList = {
   Home: undefined;
 };
 
 const RecebimentoScreen: React.FC = () => {
+  // Hook de navegação
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+  // Estados principais do componente
   const [permission, requestPermission] = BarCodeScanner.usePermissions();
   const [scanningType, setScanningType] = useState<'none' | 'qr' | 'loc'>('none');
   const [codigoVeiculo, setCodigoVeiculo] = useState<string>('');
   const [codigoLocal, setCodigoLocal] = useState<string>('');
   const [mensagem, setMensagem] = useState<string>('');
 
+  // Solicita permissão de câmera ao iniciar (exceto web)
   useEffect(() => {
     if (Platform.OS !== 'web' && !permission) {
       requestPermission();
     }
   }, [permission]);
 
+  // Manipula leitura do código de barras/QR
   const handleBarCodeScanned = ({ data }: { data: string }) => {
     if (scanningType === 'qr') {
       setCodigoVeiculo(data);
@@ -42,6 +46,7 @@ const RecebimentoScreen: React.FC = () => {
     setScanningType('none');
   };
 
+  // Permite entrada manual no navegador web
   const manualInput = async (type: 'qr' | 'loc') => {
     if (Platform.OS !== 'web') return;
     const texto = window.prompt(
@@ -59,6 +64,7 @@ const RecebimentoScreen: React.FC = () => {
     }
   };
 
+  // Inicia processo de identificação (scanner ou manual)
   const onPressIdentify = async (type: 'qr' | 'loc') => {
     setMensagem('');
     if (Platform.OS === 'web') {
@@ -75,34 +81,33 @@ const RecebimentoScreen: React.FC = () => {
     }
   };
 
-const handleArmazenar = async () => {
-  try {
-    const novo = {
+  // Armazena o registro no AsyncStorage
+  const handleArmazenar = async () => {
+    const novoRegistro = {
       veiculo: codigoVeiculo,
       localizacao: codigoLocal,
       data: new Date().toISOString(),
     };
 
-    // Pega o histórico antigo
-    const anterior = await AsyncStorage.getItem('historicoRecebimentos');
-    const historico = anterior ? JSON.parse(anterior) : [];
+    try {
+      const historicoAtual = await AsyncStorage.getItem('historicoRecebimentos');
+      const historico = historicoAtual ? JSON.parse(historicoAtual) : [];
+      historico.push(novoRegistro);
 
-    // Salva o novo + antigo
-    const atualizado = [novo, ...historico];
-    await AsyncStorage.setItem('historicoRecebimentos', JSON.stringify(atualizado));
+      await AsyncStorage.setItem('historicoRecebimentos', JSON.stringify(historico));
+      Alert.alert('Sucesso', `Veículo ${codigoVeiculo} armazenado em ${codigoLocal}`);
 
-    Alert.alert('Sucesso', `Veículo ${codigoVeiculo}\narmazenado em ${codigoLocal}`);
-    setCodigoVeiculo('');
-    setCodigoLocal('');
-    setMensagem('');
-  } catch (error) {
-    console.error('Erro ao salvar recebimento:', error);
-    Alert.alert('Erro', 'Falha ao salvar o recebimento.');
-  }
-};
+      // Resetar estado após armazenar
+      setCodigoVeiculo('');
+      setCodigoLocal('');
+      setMensagem('');
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível salvar o histórico');
+      console.error('Erro ao salvar histórico:', error);
+    }
+  };
 
-
-  // Tela de scanner nativa
+  // Renderiza tela de scanner nativa (mobile)
   if (Platform.OS !== 'web' && scanningType !== 'none') {
     if (!permission?.granted) {
       return (
@@ -127,6 +132,7 @@ const handleArmazenar = async () => {
     );
   }
 
+  // Render principal da tela de recebimento
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
@@ -164,6 +170,7 @@ const handleArmazenar = async () => {
 
 export default RecebimentoScreen;
 
+// Estilos da tela
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
