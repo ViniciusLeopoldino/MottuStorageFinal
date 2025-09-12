@@ -58,7 +58,7 @@ export default function Register() {
         senha: password
       });
       
-      setMensagem('Utilizador registado com sucesso!');
+      setMensagem('Utilizador registrado com sucesso!');
       setTipoMensagem('sucesso');
       
       setTimeout(() => {
@@ -66,7 +66,7 @@ export default function Register() {
       }, 1500);
 
     } catch (error: any) {
-      setMensagem(error.message || 'Erro ao registar utilizador.');
+      setMensagem(error.message || 'Erro ao registrar utilizador.');
       setTipoMensagem('erro');
     } finally {
       setIsLoading(false);
@@ -75,7 +75,7 @@ export default function Register() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Registo</Text>
+      <Text style={styles.title}>Registro</Text>
       <TextInput
         style={styles.input}
         placeholder="Nome de Utilizador"
@@ -123,7 +123,7 @@ export default function Register() {
         <ActivityIndicator size="large" color={theme.colors.primary} style={{ marginVertical: 15 }} />
       ) : (
         <TouchableOpacity style={styles.button} onPress={handleRegister}>
-          <Text style={styles.buttonText}>Registar</Text>
+          <Text style={styles.buttonText}>Registrar</Text>
         </TouchableOpacity>
       )}
       
