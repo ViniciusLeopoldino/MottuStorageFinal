@@ -60,45 +60,57 @@ const Recebimento: React.FC = () => {
     }
   };
 
-  const handleWebSearch = async (type: 'veiculo' | 'local') => {
+const handleWebSearch = async (type: 'veiculo' | 'local') => {
     setIsLoading(true);
     setMensagem('');
     try {
-      if (type === 'veiculo') {
-        if (!webInputVeiculo) throw new Error('Preencha o campo do veículo.');
-        const result = await api.searchVehicle(webInputVeiculo); 
-        setVeiculoEncontrado(result.veiculo);
-        setMensagem(`Veículo ${result.veiculo.placa} encontrado!`);
-      } else {
-        if (!webInputLocalizacao.armazem) throw new Error('Preencha os campos da localização.');
-        const result = await api.searchLocation(webInputLocalizacao);
-        setLocalizacaoEncontrada(result);
-        setMensagem(`Localização ${result.armazem} encontrada!`);
-      }
+        if (type === 'veiculo') {
+            if (!webInputVeiculo) throw new Error('Preencha o campo do veículo.');
+            const result = await api.searchVehicle(webInputVeiculo);
+
+            setVeiculoEncontrado(result.veiculo);
+            setMensagem(`Veículo ${result.veiculo.placa} encontrado!`);
+
+        } else {
+            if (!webInputLocalizacao.armazem) throw new Error('Preencha os campos da localização.');
+            const result = await api.searchLocation(webInputLocalizacao);
+
+            setLocalizacaoEncontrada(result);
+            setMensagem(`Localização ${result.armazem} encontrada!`);
+        }
     } catch (error) {
-      setMensagem(type === 'veiculo' ? 'Veículo não encontrado.' : 'Localização não encontrada.');
+        setMensagem(type === 'veiculo' ? 'Veículo não encontrado.' : 'Localização não encontrada.');
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  };
+};
   
-  const handleArmazenar = async () => {
+const handleArmazenar = async () => {
     if (!veiculoEncontrado || !localizacaoEncontrada) return;
     setIsLoading(true);
-    setMensagem('');
+    setMensagem(''); 
+
     try {
-      await api.createHistory(veiculoEncontrado.id, localizacaoEncontrada.id);
-      Alert.alert('Sucesso', `Veículo ${veiculoEncontrado.placa} armazenado com sucesso!`);
-      setVeiculoEncontrado(null);
-      setLocalizacaoEncontrada(null);
-      setWebInputVeiculo('');
-      setWebInputLocalizacao({ armazem: '', rua: '', modulo: '', compartimento: '' });
+        await api.createHistory(veiculoEncontrado.id, localizacaoEncontrada.id);
+
+
+        setMensagem(`Veículo ${veiculoEncontrado.placa} armazenado com sucesso na localização ${localizacaoEncontrada.armazem}-${localizacaoEncontrada.rua}-${localizacaoEncontrada.modulo}-${localizacaoEncontrada.compartimento}!`);
+
+
+        setTimeout(() => {
+            setVeiculoEncontrado(null);
+            setLocalizacaoEncontrada(null);
+            setWebInputVeiculo('');
+            setWebInputLocalizacao({ armazem: '', rua: '', modulo: '', compartimento: '' });
+            setMensagem(''); 
+        }, 5000); 
+        
     } catch (error: any) {
-      Alert.alert('Erro', error.message || 'Não foi possível guardar o registo.');
+        setMensagem(`Erro: ${error.message || 'Não foi possível guardar o registo.'}`);
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
-  };
+};
 
   // --- Renderização ---
   if (Platform.OS !== 'web' && scanningType !== 'none') {
