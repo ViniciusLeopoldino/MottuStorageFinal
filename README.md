@@ -115,7 +115,6 @@ w
 
 ## 👨‍💻 GRUPO CHALLENGE
 
-**Nome:** [Vinicius Leopoldino de Oliveira]    |  **RM:** 557047
-**Nome:** [Pablo Lopes Doria de Andrade]    |  **RM:** 556834 
+**Nome:** [Vinicius Leopoldino de Oliveira] **RM:** 557047     |     **Nome:** [Pablo Lopes Doria de Andrade] **RM:** 556834 
 
 **Curso:** [Análise e Desenvolvimento de Sistemas - FIAP]
