@@ -1,5 +1,16 @@
 
-# Mottu Storage – Sistema de Armazenamento de Motos
+## 👨‍💻 GRUPO CHALLENGE
+
+| RM                        | NOME                                                            |
+|---------------------------|-----------------------------------------------------------------|
+| **557047**                | Vinicius Leopoldino de Oliveira                                 |
+| **556834**                | Pablo Lopes Doria de Andrade                                    |
+
+**Curso:** Análise e Desenvolvimento de Sistemas - FIAP
+
+---
+
+## Mottu Storage – Sistema de Armazenamento de Motos
 
 O **Mottu Storage** é um aplicativo mobile criado para controle de entrada, identificação, localização e consulta de motocicletas nos armazéns da empresa **Mottu**. Ele foi desenvolvido com **React Native (Expo)** e utiliza **leitura de QR Code e código de barras** para automatizar o processo de triagem de motos.
 
@@ -93,10 +104,3 @@ O app **Mottu Storage** permite:
 #### Histórico  
 - Mostra o histórico dos últimos recebimentos realizados  
 
----
-
-## 👨‍💻 GRUPO CHALLENGE
-
-**Nome:** [Vinicius Leopoldino de Oliveira] **RM:** 557047     |     **Nome:** [Pablo Lopes Doria de Andrade] **RM:** 556834 
-
-**Curso:** [Análise e Desenvolvimento de Sistemas - FIAP]
