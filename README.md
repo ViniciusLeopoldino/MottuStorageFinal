@@ -5,6 +5,13 @@ O **Mottu Storage** é um aplicativo mobile criado para controle de entrada, ide
 
 ---
 
+## 🎥 Vídeo de Apresentação    
+
+➡️ Assista à demonstração completa do aplicativo no YouTube:  
+[![Apresentação do Mottu Storage](https://img.youtube.com/vi/_B2uQQMJLwY/maxresdefault.jpg)](https://www.youtube.com/watch?v=_B2uQQMJLwY)
+
+---
+
 ## 🎯 Problema Real
 
 A empresa **Mottu** realiza o recebimento de motos que passam por uma triagem e são armazenadas em compartimentos sem qualquer sistema automatizado. Atualmente, não há etiquetas ou organização de localização, o que obriga os funcionários a procurarem moto por moto manualmente — um processo lento e ineficiente.
