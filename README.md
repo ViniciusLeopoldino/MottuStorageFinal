@@ -29,7 +29,7 @@ O app **Mottu Storage** permite:
 
 | Tela                      | Descrição                                                                                     |
 |---------------------------|-----------------------------------------------------------------------------------------------|
-| **Login**                 | Tela inicial com campos de login (simulado/local)                                             |
+| **Login**                 | Tela inicial com campos de login e cadastro de usuario                                        |
 | **Home**                  | Navegação para Cadastro, Recebimento, Consulta e Histórico                                    |
 | **Cadastro de Veículo**   | Cadastro de moto + geração de QR Code + salvamento no dispositivo                             |
 | **Cadastro de Localização** | Cadastro de Localização para armazenar o veículo (Armazém, Rua, Módulo, Compartimento)      |
@@ -91,9 +91,6 @@ w
 ### 5. Login
 
 -  Você precisa criar o cadastro do usuário para realizar o login
-
-> **Importante:**  
-> O cadastro está sendo simulado localmente usando a tecnologia **AsyncStorage**, que armazena os dados no dispositivo (ou navegador no modo web). Assim, os dados ficam salvos localmente para teste e simulação do fluxo real.
 
 ### 6. Funcionalidades
 
