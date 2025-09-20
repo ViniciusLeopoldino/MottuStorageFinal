@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useAuth } from '../context/AuthContext';
-import { useTheme } from '../context/ThemeContext'; // 1. Importe o hook do tema
+import { useTheme } from '../context/ThemeContext';
 
 export default function Home({ navigation }: any) {
-  const theme = useTheme(); // 2. Obtenha o tema atual
-  const styles = getStyles(theme); // 3. Crie os estilos com base no tema
+  const theme = useTheme();
+  const styles = getStyles(theme);
   const { logout } = useAuth();
 
   const handleLogout = async () => {
@@ -13,7 +13,6 @@ export default function Home({ navigation }: any) {
   };
 
   return (
-    // 4. Use os estilos dinâmicos
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <Text style={styles.title}>HOME</Text>
@@ -59,7 +58,6 @@ export default function Home({ navigation }: any) {
   );
 }
 
-// 5. Transforme o StyleSheet numa função que recebe o tema
 const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
   wrapper: {
     flex: 1,

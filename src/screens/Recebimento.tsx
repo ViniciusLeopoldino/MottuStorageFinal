@@ -15,7 +15,6 @@ import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 
-// --- Interfaces ---
 type RootStackParamList = { Home: undefined };
 interface Veiculo { id: number; placa: string; chassi: string; }
 interface Localizacao { id: number; armazem: string; rua: string; modulo: string; compartimento: string; }
@@ -25,7 +24,6 @@ const Recebimento: React.FC = () => {
   const styles = getStyles(theme);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  // --- Estados ---
   const [permission, requestPermission] = BarCodeScanner.usePermissions();
   const [scanningType, setScanningType] = useState<'none' | 'veiculo' | 'local'>('none');
   const [veiculoEncontrado, setVeiculoEncontrado] = useState<Veiculo | null>(null);
@@ -41,7 +39,6 @@ const Recebimento: React.FC = () => {
     }
   }, [permission]);
 
-  // --- Funções de Lógica ---
   const handleBarCodeScanned = ({ data }: { data: string }) => {
     setScanningType('none');
     try {
@@ -60,59 +57,56 @@ const Recebimento: React.FC = () => {
     }
   };
 
-const handleWebSearch = async (type: 'veiculo' | 'local') => {
+  const handleWebSearch = async (type: 'veiculo' | 'local') => {
     setIsLoading(true);
     setMensagem('');
     try {
-        if (type === 'veiculo') {
-            if (!webInputVeiculo) throw new Error('Preencha o campo do veículo.');
-            const result = await api.searchVehicle(webInputVeiculo);
+      if (type === 'veiculo') {
+        if (!webInputVeiculo) throw new Error('Preencha o campo do veículo.');
+        const result = await api.searchVehicle(webInputVeiculo);
 
-            setVeiculoEncontrado(result.veiculo);
-            setMensagem(`Veículo ${result.veiculo.placa} encontrado!`);
+        setVeiculoEncontrado(result.veiculo);
+        setMensagem(`Veículo ${result.veiculo.placa} encontrado!`);
 
-        } else {
-            if (!webInputLocalizacao.armazem) throw new Error('Preencha os campos da localização.');
-            const result = await api.searchLocation(webInputLocalizacao);
+      } else {
+        if (!webInputLocalizacao.armazem) throw new Error('Preencha os campos da localização.');
+        const result = await api.searchLocation(webInputLocalizacao);
 
-            setLocalizacaoEncontrada(result);
-            setMensagem(`Localização ${result.armazem} encontrada!`);
-        }
+        setLocalizacaoEncontrada(result);
+        setMensagem(`Localização ${result.armazem} encontrada!`);
+      }
     } catch (error) {
-        setMensagem(type === 'veiculo' ? 'Veículo não encontrado.' : 'Localização não encontrada.');
+      setMensagem(type === 'veiculo' ? 'Veículo não encontrado.' : 'Localização não encontrada.');
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
+  };
   
-const handleArmazenar = async () => {
+  const handleArmazenar = async () => {
     if (!veiculoEncontrado || !localizacaoEncontrada) return;
     setIsLoading(true);
     setMensagem(''); 
 
     try {
-        await api.createHistory(veiculoEncontrado.id, localizacaoEncontrada.id);
+      await api.createHistory(veiculoEncontrado.id, localizacaoEncontrada.id);
 
+      setMensagem(`Veículo ${veiculoEncontrado.placa} armazenado com sucesso na localização ${localizacaoEncontrada.armazem}-${localizacaoEncontrada.rua}-${localizacaoEncontrada.modulo}-${localizacaoEncontrada.compartimento}!`);
 
-        setMensagem(`Veículo ${veiculoEncontrado.placa} armazenado com sucesso na localização ${localizacaoEncontrada.armazem}-${localizacaoEncontrada.rua}-${localizacaoEncontrada.modulo}-${localizacaoEncontrada.compartimento}!`);
-
-
-        setTimeout(() => {
-            setVeiculoEncontrado(null);
-            setLocalizacaoEncontrada(null);
-            setWebInputVeiculo('');
-            setWebInputLocalizacao({ armazem: '', rua: '', modulo: '', compartimento: '' });
-            setMensagem(''); 
-        }, 5000); 
-        
+      setTimeout(() => {
+        setVeiculoEncontrado(null);
+        setLocalizacaoEncontrada(null);
+        setWebInputVeiculo('');
+        setWebInputLocalizacao({ armazem: '', rua: '', modulo: '', compartimento: '' });
+        setMensagem(''); 
+      }, 5000); 
+      
     } catch (error: any) {
-        setMensagem(`Erro: ${error.message || 'Não foi possível guardar o registo.'}`);
+      setMensagem(`Erro: ${error.message || 'Não foi possível guardar o registo.'}`);
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
-};
+  };
 
-  // --- Renderização ---
   if (Platform.OS !== 'web' && scanningType !== 'none') {
     if (!permission?.granted) return <View style={styles.wrapper}><Text style={styles.message}>Sem acesso à câmara</Text></View>;
     return (
@@ -178,7 +172,6 @@ const handleArmazenar = async () => {
   );
 };
 
-// --- Estilos ---
 const getStyles = (theme: ReturnType<typeof useTheme>) => StyleSheet.create({
     wrapper: { flex: 1, backgroundColor: theme.colors.background, alignItems: 'center', paddingHorizontal: 20, paddingBottom: 30, paddingTop: 50 },
     container: { width: '100%', alignItems: 'center' },

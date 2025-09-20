@@ -1,4 +1,3 @@
-// Define as cores que a nossa aplicação irá usar
 const palette = {
   black: '#000000',
   white: '#FFFFFF',
@@ -10,20 +9,18 @@ const palette = {
   errorRed: '#ff4d4d',
 };
 
-// Define o tema para o modo claro
 export const lightTheme = {
   colors: {
     background: palette.lightGray,
     card: palette.white,
     text: palette.black,
-    primary: palette.darkGreen, // Um verde mais escuro para melhor contraste no claro
+    primary: palette.darkGreen,
     accent: palette.green,
     error: palette.errorRed,
     border: palette.mediumGray,
   },
 };
 
-// Define o tema para o modo escuro (o seu tema atual)
 export const darkTheme = {
   colors: {
     background: palette.black,

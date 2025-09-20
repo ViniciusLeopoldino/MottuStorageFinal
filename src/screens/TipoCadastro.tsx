@@ -4,8 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
 
 export default function TipoCadastro() {
-  // A utilização do 'any' aqui é uma forma simples de contornar a tipagem complexa
-  // do navigation, adequada para este contexto.
   const navigation = useNavigation<any>();
   const theme = useTheme();
   const styles = getStyles(theme);

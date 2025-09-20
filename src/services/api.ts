@@ -1,16 +1,5 @@
-// Define a URL base da API.
-// Use 'http://10.0.2.2:8080' para o emulador Android.
-// Use o IP da sua máquina na rede para um dispositivo físico.
 const BASE_URL = 'https://api-dpvtech.onrender.com/api';
 
-
-/**
- * Função para fazer uma requisição à API.
- * @param endpoint O endpoint a ser chamado (ex: '/auth/login').
- * @param method O método HTTP (GET, POST, PUT, DELETE).
- * @param body O corpo da requisição (para POST e PUT).
- * @returns A resposta da API em formato JSON ou uma promessa vazia em caso de sucesso sem conteúdo.
- */
 async function request(endpoint: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE', body?: any) {
   const headers = { 'Content-Type': 'application/json' };
   const config: RequestInit = { method, headers };
@@ -22,31 +11,25 @@ async function request(endpoint: string, method: 'GET' | 'POST' | 'PUT' | 'DELET
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, config);
 
-    // ✨ CORREÇÃO AQUI: Se a resposta não for OK, leia o corpo como texto
     if (!response.ok) {
-      // Tenta ler a resposta como texto. Se der erro, usa uma mensagem padrão.
       const errorText = await response.text();
       throw new Error(errorText || 'Ocorreu um erro na requisição.');
     }
 
-    // Se a resposta for 204 (No Content) ou o corpo for vazio, não tente ler o JSON.
     const contentLength = response.headers.get('content-length');
     if (response.status === 204 || (contentLength !== null && parseInt(contentLength) === 0)) {
         return Promise.resolve();
     }
 
-    // Para respostas OK com conteúdo, tente ler o JSON.
     const responseData = await response.json();
     return responseData;
 
   } catch (error) {
-    // Se a falha for na leitura do JSON, ou qualquer outro erro, ele será capturado e registrado aqui.
     console.error(`Erro na requisição para ${endpoint}:`, error);
     throw error;
   }
 }
 
-// Exporta funções específicas para cada endpoint
 export const api = {
   login: (email: string, senha: string) => request('/auth/login', 'POST', { email, senha }),
   register: (usuario: { nome: string; email: string; senha: string; }) => request('/auth/register', 'POST', usuario),

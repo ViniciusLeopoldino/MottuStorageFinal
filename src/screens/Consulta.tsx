@@ -12,7 +12,6 @@ import { useNavigation } from '@react-navigation/native';
 import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
 
-// --- Interfaces para definir o formato dos dados que a API retorna ---
 interface Veiculo {
   id: number;
   placa: string;
@@ -29,7 +28,6 @@ interface Localizacao {
   modulo: string;
   compartimento: string;
 }
-// A API agora retorna um objeto que contém o veículo e, opcionalmente, a localização
 interface ResultadoBusca {
   veiculo: Veiculo;
   localizacao?: Localizacao;
@@ -93,16 +91,12 @@ export default function Consulta() {
           <Text style={styles.mensagemErro}>{mensagem}</Text>
         )}
 
-        {/* --- AJUSTE AQUI --- */}
-        {/* Acessamos resultado.veiculo para os dados do veículo */}
         {resultado && (
           <View style={styles.resultado}>
             <Text style={styles.resultadoTitulo}>Dados do Veículo:</Text>
             <Text style={styles.resultadoTexto}>PLACA: {resultado.veiculo.placa}</Text>
             <Text style={styles.resultadoTexto}>CHASSI: {resultado.veiculo.chassi}</Text>
             <Text style={styles.resultadoTexto}>MODELO: {resultado.veiculo.modelo}</Text>
-            
-            {/* Mostra a localização se ela existir */}
             {resultado.localizacao && (
               <>
                 <Text style={styles.resultadoTitulo}>Última Localização:</Text>
