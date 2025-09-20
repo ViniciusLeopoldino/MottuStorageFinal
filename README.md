@@ -8,7 +8,7 @@ O **Mottu Storage** é um aplicativo mobile criado para controle de entrada, ide
 ## 🎥 Vídeo de Apresentação    
  
 ➡️ Assista à demonstração completa do aplicativo no YouTube:  
-[![Apresentação do Mottu Storage]](https://www.youtube.com/watch?v=_B2uQQMJLwY)
+[Apresentação do Mottu Storage](https://www.youtube.com/watch?v=_B2uQQMJLwY)
 
 ---
 
