@@ -12,6 +12,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import { api } from '../services/api';
 import { useTheme } from '../context/ThemeContext';
+import { sendTestNotification } from '../services/notifications';
 
 export default function Login({ navigation }: any) {
   const theme = useTheme();
@@ -35,12 +36,15 @@ export default function Login({ navigation }: any) {
     try {
       const response = await api.login(email, senha);
       if (response && response.user) {
+        //  ADICIONAR NOTIFICA«√O AQUI - LOGIN BEM-SUCEDIDO
+        await sendTestNotification();
+        
         await loginContext(response.user);
       } else {
-        setMensagemErro('Resposta inv√°lida do servidor.');
+        setMensagemErro('Resposta inv·lida do servidor.');
       }
     } catch (error: any) {
-      setMensagemErro(error.message || 'N√£o foi poss√≠vel conectar ao servidor.');
+      setMensagemErro(error.message || 'N„o foi possÌvel conectar ao servidor.');
       console.error(error);
     } finally {
       setIsLoading(false);
