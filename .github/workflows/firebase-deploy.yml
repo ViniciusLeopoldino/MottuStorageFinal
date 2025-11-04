@@ -21,11 +21,16 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Build Android APK
+    - name: Generate Android native code
+      run: npx expo prebuild --platform android --clean
+      
+    - name: Build Android APK (with Kotlin fix)
       run: |
-        npx expo prebuild --platform android
         cd android
-        chmod +x gradlew
+        ./gradlew clean
+        ./gradlew assembleDebug
+        # Se falhar, tenta forçar Kotlin version
+        sed -i 's/kotlinVersion = .*/kotlinVersion = "2.0.0"/' build.gradle
         ./gradlew assembleDebug
         
     - name: Upload APK to Firebase
