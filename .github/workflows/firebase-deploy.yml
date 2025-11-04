@@ -21,17 +21,22 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Generate Android native code
-      run: npx expo prebuild --platform android --clean
+    - name: Setup Java 17 (required for Android)
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
       
-    - name: Build Android APK (with Kotlin fix)
+    - name: Build with EAS (should work with original config)
       run: |
-        cd android
-        ./gradlew clean
-        ./gradlew assembleDebug
-        # Se falhar, tenta forçar Kotlin version
-        sed -i 's/kotlinVersion = .*/kotlinVersion = "2.0.0"/' build.gradle
-        ./gradlew assembleDebug
+        npm install -g @expo/eas-cli
+        eas build --platform android --profile preview --non-interactive
+      
+    - name: Download APK from EAS
+      uses: actions/download-artifact@v3
+      with:
+        name: android-apk
+        path: ./
         
     - name: Upload APK to Firebase
       uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -39,4 +44,4 @@ jobs:
         appId: ${{ secrets.FIREBASE_APP_ID }}
         token: ${{ secrets.FIREBASE_TOKEN }}
         groups: testers
-        file: android/app/build/outputs/apk/debug/app-debug.apk
+        file: *.apk
