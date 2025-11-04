@@ -23,7 +23,7 @@ export default function SobreApp({ navigation }: any) {
         <Text style={styles.label}>Nome:</Text>
         <Text style={styles.value}>MottuStorage</Text>
         
-        <Text style={styles.label}>Vers�o:</Text>
+        <Text style={styles.label}>Versão:</Text>
         <Text style={styles.value}>1.0.0</Text>
         
         <Text style={styles.label}>Commit:</Text>
