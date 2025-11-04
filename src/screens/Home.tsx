@@ -45,6 +45,14 @@ export default function Home({ navigation }: any) {
           <Text style={styles.buttonText}>HISTÓRICO</Text>
         </TouchableOpacity>
 
+        {/*  BOT�O SOBRE ADICIONADO AQUI */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('SobreApp')}
+        >
+          <Text style={styles.buttonText}>SOBRE</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.backButton}
           onPress={handleLogout}

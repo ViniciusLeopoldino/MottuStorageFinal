@@ -6,13 +6,22 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "COMMIT_HASH": "$(git rev-parse --short HEAD)"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+        "COMMIT_HASH": "$(git rev-parse --short HEAD)"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "COMMIT_HASH": "$(git rev-parse --short HEAD)"
+      }
     }
   },
   "submit": {

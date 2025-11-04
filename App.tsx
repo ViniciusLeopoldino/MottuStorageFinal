@@ -13,6 +13,7 @@ import Cadastrar from './src/screens/Cadastrar';
 import RecuperarSenha from './src/screens/RecuperarSenha';
 import Historico from './src/screens/Historico';
 import EdicaoLocalizacao from './src/screens/EdicaoLocalizacao';
+import SobreApp from './src/screens/SobreApp';
 
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import { ThemeProvider } from './src/context/ThemeContext';
@@ -40,6 +41,7 @@ function AppRoutes() {
           <Stack.Screen name="Consulta" component={Consulta} />
           <Stack.Screen name="Historico" component={Historico} />
           <Stack.Screen name="EdicaoLocalizacao" component={EdicaoLocalizacao} />
+          <Stack.Screen name="SobreApp" component={SobreApp} />
         </>
       )}
     </Stack.Navigator>
